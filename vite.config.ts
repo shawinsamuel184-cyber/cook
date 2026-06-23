@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   const isVitest = process.env.VITEST === "true";
   const isProd = mode === "production";
   const base = isProd ? (process.env.VITE_BASE ?? "/cook/") : "/";
+  const showTraeBadge = process.env.VITE_SHOW_TRAE_BADGE === "true";
 
   return {
     base,
@@ -27,15 +28,19 @@ export default defineConfig(({ mode }) => {
       ...(isVitest
         ? []
         : [
-            traeBadgePlugin({
-              variant: "dark",
-              position: "bottom-right",
-              prodOnly: true,
-              clickable: true,
-              clickUrl: "https://www.trae.ai/solo?showJoin=1",
-              autoTheme: true,
-              autoThemeTarget: "#root",
-            }),
+            ...(showTraeBadge
+              ? [
+                  traeBadgePlugin({
+                    variant: "dark",
+                    position: "bottom-right",
+                    prodOnly: true,
+                    clickable: true,
+                    clickUrl: "https://www.trae.ai/solo?showJoin=1",
+                    autoTheme: true,
+                    autoThemeTarget: "#root",
+                  }),
+                ]
+              : []),
           ]),
       tsconfigPaths(),
     ],

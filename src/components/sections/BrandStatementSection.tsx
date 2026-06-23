@@ -15,24 +15,15 @@ type BrandStatementSectionProps = {
 export default function BrandStatementSection({ word, image }: BrandStatementSectionProps) {
   const reduced = usePrefersReducedMotion();
   const rootRef = useRef<HTMLElement | null>(null);
-  const wordRef = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (reduced) return;
     const root = rootRef.current;
-    const w = wordRef.current;
     const img = imageRef.current;
-    if (!root || !w || !img) return;
+    if (!root || !img) return;
 
     const ctx = gsap.context(() => {
-      gsap.to(w, {
-        xPercent: -8,
-        duration: 1.1,
-        ease: "power2.out",
-        scrollTrigger: { trigger: root, start: "top 80%", toggleActions: "play none none none", once: true },
-      });
-
       gsap.to(img, {
         yPercent: -6,
         duration: 1.4,
@@ -69,7 +60,6 @@ export default function BrandStatementSection({ word, image }: BrandStatementSec
 
           <div className="mt-8 overflow-hidden">
             <div
-              ref={wordRef}
               className="font-display text-[54px] leading-[0.8] text-ivory sm:text-[92px] lg:text-[140px]"
               style={{ letterSpacing: "-0.02em" }}
             >
